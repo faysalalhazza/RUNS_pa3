@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RUNS – Register</title>
+  <link rel="stylesheet" href="{% static 'runs/css/style.css' %}">
+</head>
+<body>
+  <div class="register-page">
+
+    <span class="runs-logo">RUNS</span>
+    <hr class="register-divider">
+
+    {% if messages %}
+      <ul class="messages" style="max-width:440px; width:100%; margin-bottom:20px;">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form method="post" class="register-form">
+      {% csrf_token %}
+
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" autocomplete="username" required>
+
+      <label for="first_name">First Name</label>
+      <input type="text" id="first_name" name="first_name" required>
+
+      <label for="last_name">Last Name</label>
+      <input type="text" id="last_name" name="last_name" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" autocomplete="new-password" required>
+
+      <label for="password2">Confirm Password</label>
+      <input type="password" id="password2" name="password2" autocomplete="new-password" required>
+
+      <button type="submit" class="btn-yellow">CREATE ACCOUNT</button>
+    </form>
+
+  </div>
+</body>
+</html>

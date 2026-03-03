@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RUNS – Home</title>
+  <link rel="stylesheet" href="{% static 'runs/css/style.css' %}">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <span class="runs-logo">RUNS</span>
+  </header>
+
+  <div class="app-body">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <a href="{% url 'stream' %}" class="active">Home</a>
+      <a href="{% url 'profile' %}">Profile</a>
+      <a href="{% url 'logout' %}">Log Out</a>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+      <!-- Tabs -->
+      <div class="stream-tabs">
+        <a href="{% url 'stream' %}" class="stream-tab active">For You</a>
+        <span class="stream-tab">Following</span>
+      </div>
+
+      <!-- Posts -->
+      <ul class="post-list">
+        {% for post in posts %}
+          <li class="post-card">
+            <div class="avatar">{{ post.author.username|first|upper }}</div>
+            <div class="post-body">
+              <a href="{% url 'profile_user' post.author.username %}" class="post-username">{{ post.author.username }}</a>
+              <div class="post-content">{{ post.content }}</div>
+              <div class="post-meta">
+                {{ post.created_at|date:"M j, Y · g:i A" }}
+                {% if post.location %} · 📍 {{ post.location }}{% endif %}
+              </div>
+            </div>
+          </li>
+        {% empty %}
+          <li class="empty-state">No posts yet. Be the first to post!</li>
+        {% endfor %}
+      </ul>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

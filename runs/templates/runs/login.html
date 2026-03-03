@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RUNS – Log In</title>
+  <link rel="stylesheet" href="{% static 'runs/css/style.css' %}">
+</head>
+<body>
+  <div class="login-page">
+
+    <!-- LEFT: Logo -->
+    <div class="login-left">
+      <span class="runs-logo">RUNS</span>
+    </div>
+
+    <!-- RIGHT: Login form -->
+    <div class="login-right">
+
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <label for="username">Username</label>
+      <form method="post" style="width:100%">
+        {% csrf_token %}
+        <input type="text" id="username" name="username" autocomplete="username" required>
+
+        <label for="password">
+          Password
+          <span class="tooltip-icon" title="Enter your password">?</span>
+        </label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+
+        <div class="login-buttons">
+          <a href="{% url 'register' %}" class="btn-yellow">Register</a>
+          <button type="submit" class="btn-yellow">Log In</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>
