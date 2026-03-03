@@ -1,78 +1,61 @@
-RUNS - Social Media Web App
-### COP 4813 - Web Application Programming | PA3: Data Models
+# RUNS - Social Media Web App
+### COP 4813 — PA3: Data Models
 
-**Team Members:** [Faisal Alhazza,Gabby,Nickelli]
-
-## Setup Instructions
-
-1. **Install Django:**
-   ```
-   pip install django
-   ```
-
-2. **Run migrations to create the database:**
-   ```
-   cd webapps
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
-
-3. **Create a test user (for demo purposes):**
-   ```
-   python manage.py shell
-   ```
-   Then in the shell:
-   ```python
-   from django.contrib.auth.models import User
-   from runs.models import UserProfile, Post
-
-   u = User.objects.create_user(username='NPB25_', first_name='Test', last_name='User', password='testpass123')
-   UserProfile.objects.create(user=u)
-   Post.objects.create(author=u, content='Hello World!')
-   Post.objects.create(author=u, content='Im tired')
-   Post.objects.create(author=u, content="What's Forrest Gump's password? 1forrest1.")
-   exit()
-   ```
-
-4. **Run the development server:**
-   ```
-   python manage.py runserver
-   ```
-
-5. **Visit:** http://localhost:8000/
+**Team:** Faisal Alhazza, Gabby, Nickelli  
+**GitHub:** https://github.com/faysalalhazza/RUNS_pa3  
+**Branch:** pa3
 
 ---
 
-## Inline Questions
+## How to Run
+```bash
+pip install django
+cd webapps
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
 
-### Q1: Database Schema Design
-The app uses **two tables** beyond Django's built-in auth tables:
+Visit: http://localhost:8000
 
-- **runs_userprofile**: Extends the built-in `auth_user` table with a `OneToOneField` foreign key to `auth_user.id`, plus an optional `middle_name` field (VARCHAR). The default auto-incrementing integer is used as the primary key.
+## Test User Setup
+```bash
+python manage.py shell
+```
+```python
+from django.contrib.auth.models import User
+from runs.models import UserProfile, Post
 
-- **runs_post**: Stores each post with the following columns:
-  - `id` (INTEGER, auto-increment primary key)
-  - `content` (VARCHAR, max 42 characters)
-  - `author_id` (INTEGER, foreign key → `auth_user.id`)
-  - `created_at` (DATETIME, auto-set on creation)
-  - `location` (VARCHAR, optional)
+u = User.objects.create_user(username='NPB25_', first_name='Test', last_name='User', password='testpass123')
+UserProfile.objects.create(user=u)
+Post.objects.create(author=u, content='Hello World!')
+Post.objects.create(author=u, content='Im tired')
+Post.objects.create(author=u, content="What's Forrest Gump's password? 1forrest1.")
+exit()
+```
 
-The built-in Django `auth_user` table provides: `id`, `username`, `first_name`, `last_name`, `password`, `email`, and other auth fields.
+---
 
-**Foreign key used:** `runs_post.author_id` references `auth_user.id`, and `runs_userprofile.user_id` references `auth_user.id`.
+## Q1 — Database Schema
 
-### Q2: Primary Key of First Record
-When using Django's default primary key (auto-incrementing integer), the primary key of the **first record** created is **1**. Django starts the auto-increment counter at 1 for SQLite databases.
+We used two tables on top of Django's built-in auth_user:
 
-### Q3: Time Spent & Feedback
-**Time spent:** Approximately [X] hours.
+- **runs_userprofile** — extends the default user with an optional middle name field. Has a OneToOne foreign key to auth_user.
+- **runs_post** — stores each post: content (max 42 chars), author (FK to auth_user), timestamp, and location (optional).
 
-**Feedback:** [Add your thoughts here — e.g., the assignment was well-scoped, the data modeling concepts were clearly explained, etc.]
+Default auto-increment primary keys on everything. No custom PKs needed.
+
+## Q2 — First Record Primary Key
+
+It's 1. Django/SQLite starts counting from 1.
+
+## Q3 — Time & Feedback
+
+Took us around 8-10 hours. The OneToOne relationship between UserProfile and Django's built-in User took a bit to figure out but made sense once we got it working. Pretty solid assignment overall — would've helped to see a model relationship example in class beforehand.
 
 ---
 
 ## External Resources
-- Django Documentation: https://docs.djangoproject.com/
-- Django Auth System: https://docs.djangoproject.com/en/stable/topics/auth/
-- Google Fonts (Permanent Marker, Space Mono): https://fonts.google.com/
-
+- Django docs: https://docs.djangoproject.com/
+- Bootstrap: https://getbootstrap.com/
+- Google Fonts: https://fonts.google.com/

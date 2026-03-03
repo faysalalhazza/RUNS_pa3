@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Post, UserProfile
 
@@ -59,20 +58,20 @@ def register_view(request):
     return render(request, 'runs/register.html')
 
 
-@login_required
+
 def logout_view(request):
     logout(request)
     return redirect('login')
 
 
-@login_required
+
 def stream_view(request):
     """Global stream — all posts from all users."""
     posts = Post.objects.select_related('author').all()
     return render(request, 'runs/stream.html', {'posts': posts})
 
 
-@login_required
+
 def profile_view(request, username=None):
     """Profile page for a given user (defaults to logged-in user)."""
     if username is None:
